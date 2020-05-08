@@ -2,8 +2,8 @@ var Sequelize = require("sequelize");
 var enviro = require("dotenv").config();
 
 var password = process.env.DB_PASS
-if (process.env.JAWSB_URL) {
-    sequelize = new Sequelize(process.env.JAWSB_URL)
+if (process.env.JAWSDB_URL) {
+    sequelize = new Sequelize(process.env.JAWSDB_URL)
 } else {
      sequelize = new Sequelize("burger2", "root", password, {
     host: "localhost",
