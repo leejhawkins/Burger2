@@ -38,6 +38,9 @@ body {
     margin-left: 0px;
     
 }
+th {
+    border-bottom: solid black 2px;
+}
 .col-3 {
     padding: 0px 0px;
 }
