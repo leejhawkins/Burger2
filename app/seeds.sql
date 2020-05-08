@@ -1,0 +1,15 @@
+insert into component (compName,compType) values ('Sourdough','bun');
+insert into component (compName,compType) values ('Rye','bun');
+insert into component (compName,compType,addOnPrice) VALUES ('Bison','pattyType',2.00);
+insert into component (compName,compType,addOnPrice) VALUES ('Double Beef','pattyType',2.50);
+insert into component (compName,compType,addOnPrice) VALUES ('Triple Beef','pattyType',4.50);
+insert into component (compName,compType,addOnPrice) VALUES ('Gorgonzola','cheese',1.00);
+insert into component (compName,compType,addOnPrice) VALUES ('Swiss','cheese',1.00);
+insert into component (compName,compType) VALUES ('1000 Island Dressing','sauce');
+insert into component (compName,compType) VALUES ('Buffalo','sauce');
+insert into component (compName,compType,addOnPrice) VALUES ('Double Bacon','addOn',2.50);
+insert into component (compName,compType,addOnPrice) VALUES ('Sauteed Mushrooms','addOn',1.00);
+insert into component (compName,compType,addOnPrice) VALUES ('Sauteed Onions','addOn',1.00);
+insert into component (compName,compType) VALUES ('Pickles','addOn');
+insert into component (compName,compType) VALUES ('Raw Onion','addOn');
+insert into component (compName,compType,addonPrice) VALUES ('Jalapenos','addOn',0.50);

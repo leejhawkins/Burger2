@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/burger2.css" type="text/css" />
+    <title>Burger Time</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="icon" type="image/png" href="images/images/hamburgericon.png">
+</head>
+
+
+<body background="images/images/burger.jpg" style="background-size:cover">
+    <h1><img src="https://fontmeme.com/permalink/200501/0419822c99c58f7a68e785dfe25b8275.png" alt="burger-king-font">
+    </h1>
+
+    <div class="container">
+        <div class="row main">
+            <div class="col-5">
+                <h3><img class="column-title"
+                        src="https://fontmeme.com/permalink/200501/f68dc36c0847491917fea61dac4b4d7d.png"
+                        alt="burger-king-font"></h3>
+                <div id="undevoured"></div>
+            </div>
+            <div class="col-3">
+                <h3><img class="column-title"
+                        src="https://fontmeme.com/permalink/200501/2ec29937d7dd0abb861d85e42120e87e.png"
+                        alt="burger-king-font"></h3>
+                <form id="addburger">
+
+                    <select class="selectpicker custom-select" id="patty">
+                        <option selected>Choose Patty Type</option>
+                    </select>
+
+                    <select class="selectpicker custom-select" id="bun">
+                        <option selected>Choose Bun</option>
+                    </select>
+
+                    <div class="dropdown">
+                        <button class="btn btn-danger btn-block mt-3 mb-5 dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sauces
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="sauces">
+
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-danger btn-block mt-3 mb-5 dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cheeses
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="cheese">
+
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-danger btn-block mt-3 mb-5 dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add Ons
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="add-on">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="burg">Burger Name:</label>
+                        <input type="text" id="burg" name="burger" default-value=null>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Add Burger<img class="b-icon"
+                            src="images/images/hamburgericon.png"></button>
+                </form>
+            </div>
+            <div class="col-4">
+                <h3><img class="column-title"
+                        src="https://fontmeme.com/permalink/200501/90b644608e76590e8f2842ad9393a24c.png"
+                        alt="burger-king-font"></h3>
+                <table>
+                    <tr class="row">
+                        <th class="col-2 name">
+                            Place
+                        </th>
+                        <th class="col-8 name">
+                            Burger Name
+                        </th>
+                        <th class="col-2 name">
+                            #Sold
+                        </th>
+                        
+                        <tbody id="best-sellers">
+
+                        </tbody>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="js/burger.js" type="text/javascript"></script>
+</body>
+
+</html>
