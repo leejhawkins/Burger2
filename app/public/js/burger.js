@@ -45,6 +45,8 @@ $(document).ready(function () {
         $.post("api/new", newBurger).then(function () {
             $("#burg").val("")
             $("#add-on").empty()
+            $("#patty").empty()
+            $("#bun").empty()
             $("#patty").val("Selected Disabled Value")
             $("#bun").val("Selected Disabled Value")
             $("#sauces").empty().val("");
