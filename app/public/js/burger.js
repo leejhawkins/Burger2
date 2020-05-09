@@ -5,7 +5,7 @@ $(document).ready(function () {
     var sauces = [];
     $("#addburger").on("submit", function (event) {
         event.preventDefault();
-        var burgerCost = 7.00;
+        var burgerCost = 7.50;
         var pattyType = $("#patty").val().split(" +$", 2)
         burgerCost = + burgerCost + parseFloat(pattyType[1]);
         var sauce = "";
