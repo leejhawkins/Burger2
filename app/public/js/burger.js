@@ -10,23 +10,27 @@ $(document).ready(function () {
         burgerCost = + burgerCost + parseFloat(pattyType[1]);
         var sauce = "";
         for (var i = 0; i < sauces.length; i++) {
-            if ($("#" + sauces[i]).prop("checked") === true) {
-                sauce += $("#" + sauces[i]).val() + " ";
-                burgerCost += parseFloat($("#" + sauces[i]).attr("cost"));
+            var buttonId = sauces[i].replace(/\s+/g, '-').toLowerCase()
+            if ($("#" + buttonId).prop("checked") === true) {
+                sauce += $("#" + buttonId).val() + ",";
+                burgerCost += parseFloat($("#" + buttonId).attr("cost"));
             }
         }
         var cheese = ""
         for (var i = 0; i < cheeses.length; i++) {
-            if ($("#" + cheeses[i]).prop("checked") === true) {
-                cheese += $("#" + cheeses[i]).val() + " ";
-                burgerCost += parseFloat($("#" + cheeses[i]).attr("cost"))
+            var buttonId = cheeses[i].replace(/\s+/g, '-').toLowerCase()
+            if ($("#" + buttonId).prop("checked") === true) {
+                cheese += $("#" + buttonId).val() + ",";
+                burgerCost += parseFloat($("#" + buttonId).attr("cost"))
             }
         }
+        
         var addOn = "";
         for (var i = 0; i < addOns.length; i++) {
-            if ($("#" + addOns[i]).prop("checked") === true) {
-                addOn += $("#" + addOns[i]).val() + " ";
-                burgerCost += parseFloat($("#" + addOns[i]).attr("cost"))
+            var buttonId = addOns[i].replace(/\s+/g, '-').toLowerCase()
+            if ($("#" + buttonId).prop("checked") === true) {
+                addOn += $("#" + buttonId).val() + ",";
+                burgerCost += parseFloat($("#" + buttonId).attr("cost"))
             }
         }
 
@@ -45,8 +49,6 @@ $(document).ready(function () {
         $.post("api/new", newBurger).then(function () {
             $("#burg").val("")
             $("#add-on").empty()
-            $("#patty").empty()
-            $("#bun").empty()
             $("#patty").val("Selected Disabled Value")
             $("#bun").val("Selected Disabled Value")
             $("#sauces").empty().val("");
@@ -78,13 +80,13 @@ $(document).ready(function () {
                     var buttonDiv = $("<div>").addClass("col-3").append($("<button>").attr("type", "button").addClass("orderBurg btn btn-danger ").attr("burgerid", data[i].id).attr("numberSold", data[i].numSold).text("Order").append($("<img>").attr("src", "images/images/eatenhamburgericon2.png").addClass("b-icon")))
                     var descriptionDiv = $("<div>").addClass("col-4 descript")
                     var description = data[i].patty + " on a " + data[i].bun + " Bun ";
-                    var cheeseArray = data[i].cheese.split(" ")
+                    var cheeseArray = data[i].cheese.split(",")
                     if (cheeseArray[0] === "") {
-                        console.log("no cheese")
                     } else if (cheeseArray.length === 1) {
                         description += " smothered in " + cheeseArray[0] + " cheese"
 
                     } else {
+                        cheeseArray.pop()
                         for (var j = 0; j < cheeseArray.length; j++) {
                             if (j === 0) {
                                 description += " smothered in " + cheeseArray[j]
@@ -96,12 +98,13 @@ $(document).ready(function () {
                         }
                     }
 
-                    var sauceArray = data[i].sauces.split(" ")
+                    var sauceArray = data[i].sauces.split(",")
                     if (sauceArray[0] === "") {
                     } else if (sauceArray.length === 1) {
                         description += " slathered in " + sauceArray[0] + " sauce"
 
                     } else {
+                        sauceArray.pop()
                         for (var j = 0; j < sauceArray.length; j++) {
                             if (j === 0) {
                                 description += " covered in " + sauceArray[j]
@@ -112,11 +115,13 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    var addOnArray = data[i].addOn.split(" ")
+                    var addOnArray = data[i].addOn.split(",")
+                    
                     if (addOnArray[0] === "") {
                     } else if (addOnArray.length === 1) {
                         description += " and topped with " + addOnArray[0];
                     } else {
+                        addOnArray.pop()
                         for (var j = 0; j < addOnArray.length; j++) {
                             if (j === 0) {
                                 description += " and topped with " + addOnArray[j]
@@ -162,7 +167,9 @@ $(document).ready(function () {
     }
     function getComponents() {
         $.get("api/components", function (data) {
+            
             for (var i = 0; i < data.length; i++) {
+                var buttonId = data[i].compName.replace(/\s+/g, '-').toLowerCase()
                 if (data[i].compType === "pattyType") {
                     $("#patty").append($("<option>").addClass("menuItem").text(data[i].compName + " +$" + data[i].addOnPrice))
                 } else if (data[i].compType === "bun") {
@@ -170,15 +177,15 @@ $(document).ready(function () {
                 } else if (data[i].compType === "sauce") {
 
                     sauces.push(data[i].compName)
-                    $("#sauces").append($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", data[i].compName).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
+                    $("#sauces").append($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", buttonId).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
 
                 } else if (data[i].compType === "cheese") {
                     cheeses.push(data[i].compName)
-                    $("#cheese").append($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", data[i].compName).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
+                    $("#cheese").append($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", buttonId).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
 
                 } else if (data[i].compType === "addOn") {
                     addOns.push(data[i].compName)
-                    $("#add-on").append($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", data[i].compName).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
+                    $("#add-on").append($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", buttonId).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
                 }
             }
         })
