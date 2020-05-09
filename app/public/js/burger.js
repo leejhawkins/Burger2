@@ -194,7 +194,20 @@ $(document).ready(function () {
         $("#best-sellers").empty();
         $.get("/api/bestsellers", function (data) {
             for (var i = 0; i < data.length; i++) {
-                var place = i + 1;
+                
+                var place = (i + 1);
+                for (var j=i+1;j>=0;j--){
+                    if (j===data.length){
+
+                    } else if(j===i) {
+
+                    } else if (data[i].numSold===data[j].numSold && j===i+1) {
+                        place="T"+(i+1)
+                    } else if (data[i].numSold===data[j].numSold) {
+                        place="T"+(j+1)
+                    }
+                }
+                
                 var row = $("<tr>").addClass("row")
                 var name = $("<td>").addClass("name col-8")
                 name.text(data[i].burgerName)
