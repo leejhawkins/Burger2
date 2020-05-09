@@ -82,7 +82,8 @@ $(document).ready(function () {
                     var description = data[i].patty + " on a " + data[i].bun + " Bun ";
                     var cheeseArray = data[i].cheese.split(",")
                     if (cheeseArray[0] === "") {
-                    } else if (cheeseArray.length === 1) {
+                    } else if (cheeseArray.length === 2) {
+                        cheeseArray.pop()
                         description += " smothered in " + cheeseArray[0] + " cheese"
 
                     } else {
@@ -101,7 +102,7 @@ $(document).ready(function () {
                     var sauceArray = data[i].sauces.split(",")
                     if (sauceArray[0] === "") {
                     } else if (sauceArray.length === 1) {
-                        description += " slathered in " + sauceArray[0] + " sauce"
+                        description += " slathered in " + sauceArray[0]
 
                     } else {
                         sauceArray.pop()
@@ -109,7 +110,7 @@ $(document).ready(function () {
                             if (j === 0) {
                                 description += " covered in " + sauceArray[j]
                             } else if (j === sauceArray.length - 1) {
-                                description += " and " + sauceArray[j] + " sauces"
+                                description += " and " + sauceArray[j]
                             } else {
                                 description += ", " + sauceArray[j]
                             }
