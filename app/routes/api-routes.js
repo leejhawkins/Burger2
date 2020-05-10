@@ -7,7 +7,9 @@ module.exports = function (app) {
         });
     });
     app.get("/api/components",function(req,res){
-        Component.findAll({}).then(function (results){
+        Component.findAll({
+            order: [['addOnPrice', 'ASC']]
+        }).then(function (results){
             res.json(results)
         })
     })
