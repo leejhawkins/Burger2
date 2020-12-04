@@ -4,7 +4,7 @@ var sequelize = require("../config/connection.js");
 
 var Burger = sequelize.define("burger", {
     burgerName: {type:Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
     },
     patty: {
         type:Sequelize.STRING,

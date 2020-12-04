@@ -2,7 +2,7 @@
 $(document).ready(function () {
     var addOns = [];
     var cheeses = [];
-    var sauces = [];
+    var sauces = []; 
     $("#addburger").on("submit", function (event) {
         event.preventDefault();
         var burgerCost = 7.50;
@@ -12,7 +12,7 @@ $(document).ready(function () {
         for (var i = 0; i < sauces.length; i++) {
             var buttonId = sauces[i].replace(/\s+/g, '-').toLowerCase()
             if ($("#" + buttonId).prop("checked") === true) {
-                sauce += $("#" + buttonId).val() + ",";
+                sauce += $("#" + buttonId).val() + " ";
                 burgerCost += parseFloat($("#" + buttonId).attr("cost"));
             }
         }
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 burgerCost += parseFloat($("#" + buttonId).attr("cost"))
             }
         }
-        
+         
         var addOn = "";
         for (var i = 0; i < addOns.length; i++) {
             var buttonId = addOns[i].replace(/\s+/g, '-').toLowerCase()
@@ -40,9 +40,9 @@ $(document).ready(function () {
             burgerName: $("#burg").val().trim(),
             patty: pattyType[0],
             bun: $("#bun").val(),
-            sauce: sauce.trim(),
-            cheese: cheese.trim(),
-            addOn: addOn.trim(),
+            sauce: sauce.trim().slice(0, -1),
+            cheese: cheese.trim().slice(0,-1),
+            addOn: addOn.trim().slice(0, -1),
             price: burgerCost
         }
 
@@ -73,77 +73,79 @@ $(document).ready(function () {
         $("#undevoured").empty();
         $.get("/api/all", function (data) {
             if (data.length !== 0) {
-                for (var i = 0; i < data.length; i++) {
-
-
-
-                    var buttonDiv = $("<div>").addClass("col-3").append($("<button>").attr("type", "button").addClass("orderBurg btn btn-danger ").attr("burgerid", data[i].id).attr("numberSold", data[i].numSold).text("Order").append($("<img>").attr("src", "images/images/eatenhamburgericon2.png").addClass("b-icon")))
+                data.forEach(burger => {
+                    var buttonDiv = `<div class="col-3">
+                                        <button type="button" class="orderBurg btn btn-danger" burgerId=${burger.id} numberSold=${burger.numSold}>
+                                            Order
+                                            <img src="images/images/eatenhamburgericon2.png" class="b-icon">
+                                        </button>
+                                    <div>`
                     var descriptionDiv = $("<div>").addClass("col-4 descript")
-                    var description = data[i].patty + " on a " + data[i].bun + " Bun ";
-                    var cheeseArray = data[i].cheese.split(",")
-                    if (cheeseArray[0] === "") {
-                    } else if (cheeseArray.length === 2) {
-                        cheeseArray.pop()
-                        description += " smothered in " + cheeseArray[0] + " cheese"
+                    var description = burger.patty + " on a " + burger.bun + " Bun ";
+                    var cheeseArray = burger.cheese.split(",")
+                    var sauceArray = burger.sauces.split(",")
+                    var addOnArray = burger.addOn.split(",")
+                    if (!(cheeseArray[0] === "")) {
+                        description += " smothered in "
+                        if (cheeseArray.length === 1) {
+                            description += cheeseArray[0] + " cheese"
+                        } else {
+                            for (var j = 0; j < cheeseArray.length; j++) {
+                                if (j === 0) {
+                                    description += cheeseArray[j]
+                                } else if (j === cheeseArray.length - 1) {
+                                    description += " and " + cheeseArray[j] + " cheeses"
+                                } else {
+                                    description += ", " + cheeseArray[j]
+                                }
+                            }
+                        }                        
+                    }  
+                    if (!(sauceArray[0] === "")) {
+                        description += " slathered in "
+                        if (sauceArray.length === 1) {
+                            description += sauceArray[0]
 
-                    } else {
-                        cheeseArray.pop()
-                        for (var j = 0; j < cheeseArray.length; j++) {
-                            if (j === 0) {
-                                description += " smothered in " + cheeseArray[j]
-                            } else if (j === cheeseArray.length - 1) {
-                                description += " and " + cheeseArray[j] + " cheeses"
-                            } else {
-                                description += ", " + cheeseArray[j]
+                        } else {
+                            for (var j = 0; j < sauceArray.length; j++) {
+                                if (j === 0) {
+                                    description += sauceArray[j]
+                                } else if (j === sauceArray.length - 1) {
+                                    description += " and " + sauceArray[j]
+                                } else {
+                                    description += ", " + sauceArray[j]
+                                }
                             }
                         }
-                    }
-
-                    var sauceArray = data[i].sauces.split(",")
-                    if (sauceArray[0] === "") {
-                    } else if (sauceArray.length === 1) {
-                        description += " slathered in " + sauceArray[0]
-
-                    } else {
-                        sauceArray.pop()
-                        for (var j = 0; j < sauceArray.length; j++) {
-                            if (j === 0) {
-                                description += " covered in " + sauceArray[j]
-                            } else if (j === sauceArray.length - 1) {
-                                description += " and " + sauceArray[j]
-                            } else {
-                                description += ", " + sauceArray[j]
-                            }
-                        }
-                    }
-                    var addOnArray = data[i].addOn.split(",")
+                    } 
                     
-                    if (addOnArray[0] === "") {
-                    } else if (addOnArray.length === 1) {
-                        description += " and topped with " + addOnArray[0];
-                    } else {
-                        addOnArray.pop()
-                        for (var j = 0; j < addOnArray.length; j++) {
-                            if (j === 0) {
-                                description += " and topped with " + addOnArray[j]
-                            } else if (j === addOnArray.length - 1) {
-                                description += " and " + addOnArray[j]
-                            } else {
-                                description += ", " + addOnArray[j]
+                    
+                    if (!(addOnArray[0] === "")) {
+                        description += " and topped with "
+                        if (addOnArray.length === 1) {
+                            description += addOnArray[0];
+                        } else {
+                            addOnArray.pop()
+                            for (var j = 0; j < addOnArray.length; j++) {
+                                if (j === 0) {
+                                    description += addOnArray[j]
+                                } else if (j === addOnArray.length - 1) {
+                                    description += " and " + addOnArray[j]
+                                } else {
+                                    description += ", " + addOnArray[j]
+                                }
                             }
                         }
-                    }
+                    } 
                     var row = $("<div>").addClass("burger row")
                     var icon = $("<img>").attr("src", "images/images/hamburgericon.png").addClass("b-icon")
                     var name = $("<div>").addClass("col-5 name ")
-                    name.append(icon).append(data[i].burgerName).append($("<div>").html("<br>" + "Price: $" + data[i].price))
+                    name.append(icon).append(burger.burgerName).append($("<div>").html("<br>" + "Price: $" + burger.price))
                     descriptionDiv.text(description)
                     row.append(name)
                     row.append(descriptionDiv).append(buttonDiv)
                     $("#undevoured").append(row)
-
-
-                }
+                })
 
 
             }
@@ -186,7 +188,7 @@ $(document).ready(function () {
 
                 } else if (data[i].compType === "addOn") {
                     addOns.push(data[i].compName)
-                    $("#add-on").append($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", buttonId).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
+                    $("#add-on").append   ($("<div>").addClass("dropdown-item").append($("<div>").addClass("form-check").append($("<input>").attr("type", "checkbox").addClass("form-check-input").val(data[i].compName).attr("id", buttonId).attr("cost", data[i].addOnPrice)).append($("<label>").addClass("form-check-label").text(data[i].compName + " $" + data[i].addOnPrice))))
                 }
             }
         })
